@@ -1,0 +1,1 @@
+# django_b2c_dailyfresh
