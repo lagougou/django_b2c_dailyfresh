@@ -4,7 +4,7 @@
 from django.db import models
 from db.base_model import BaseModel
 from goods.models import GoodsSKU
-from users.models import User, Address
+from user.models import User, Address
 
 class OrderInfo(BaseModel):
     """订单模型类"""

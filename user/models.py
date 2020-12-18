@@ -8,16 +8,21 @@ from hashlib import md5
 
 # Create your models here.
 class User( AbstractUser, BaseModel):
+
     """用户模型类"""
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_active = False
     # user_id = models.IntegerField("id", primary_key=True, auto_created=True)
     def generate_active_token(self):
         '''生成用户名签名字符串'''
         serializer = Serializer(settings.SECRET_KEY, 3600)
         info = {"confirm": self.user_id}
-        token = serializer.dumps(info)
+        token = serializer.dumps(info).decode("utf-8") #解析成字符串
         return token
 
-    user_id = models.IntegerField(primary_key=True, auto_created=True, verbose_name="id")
+    user_id = models.AutoField(primary_key=True, verbose_name="id")
+    
     # username = models.CharField('用户名', max_length=50, default='匿名用户', null=False)
     # password = models.CharField('密码', max_length=50, null=False)
     # email = models.CharField('邮箱', max_length=50, unique=True, null=False)
