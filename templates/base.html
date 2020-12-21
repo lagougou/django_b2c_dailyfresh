@@ -35,12 +35,9 @@
 				</div>
                 {% endif %}
 				<div class="user_link fl">
-					<!-- <span>|</span>
-					<a href="{% url 'user:user' %}">用户中心</a>
 					<span>|</span>
-					<a href="{% url 'cart:cart' %}">我的购物车</a>
-					<span>|</span>
-					<a href="{% url 'user:order' 1 %}">我的订单</a> -->
+					<a href="{% url 'user:center' %}">用户中心</a>
+					
 				</div>
 			</div>
 		</div>		
@@ -50,7 +47,7 @@
 {# 网页搜索框块 #}
 {% block search_bar %}
 	<div class="search_bar clearfix">
-		<a href="{% url 'goods:index' %}" class="logo fl"><img src="{% static 'images/logo.png' %}"></a>
+		
 		<div class="search_con fl">
             <form action="/search" method="get">
                 <input type="text" class="input_text fl" name="q" placeholder="搜索商品">
@@ -61,7 +58,7 @@
 
     {% block cart_bar %}
 		<div class="guest_cart fr">
-			<a href="{% url 'cart:cart' %}" class="cart_name fl">我的购物车</a>
+	
             {% if cart_count %}
 			    <div class="goods_count fl" id="show_count">{{ cart_count }}</div>
             {% else %}

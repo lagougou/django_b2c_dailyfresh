@@ -6,11 +6,9 @@ from django.conf import settings
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 import re
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.core.mail import send_mail
 from celery_task.tasks import send_email
-from django.contrib.auth.decorators import login_required
 from utils.minxin import LoginRequiredMixin
 
 # Create your views here.
@@ -154,7 +152,10 @@ class LoginView(TemplateView):
                 return redirect(reverse(next_url))
             return render(request,self.template_name, {"errmsg": "用户未激活"})
 
-
+class LogoutView(TemplateView):
+    def get(self, request):
+        logout(request)
+        return redirect(reverse('goods:index'))
 class UserCenterView(LoginRequiredMixin):
     """用户中心"""
     template_name = 'user/center.html'
@@ -164,15 +165,15 @@ class UserCenterView(LoginRequiredMixin):
         return render(request,self.template_name )
 
 
-class UserOrderView(LoginRequiredMixin,TemplateView):
+class UserOrderView(LoginRequiredMixin):
     template_name = 'user/order.html'
-    @login_required
+    # @login_required
     def get(self, request):
         return render(self, 'user/order.html')
 
 
-class UserAddressView(LoginRequiredMixin, TemplateView):
+class UserAddressView(LoginRequiredMixin):
     template_name = 'user/addr.html'
-    @login_required
+    # @login_required
     def get(self, request):
         return render(self, 'user/addr.html')
